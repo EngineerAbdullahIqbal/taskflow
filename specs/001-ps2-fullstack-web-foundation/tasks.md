@@ -24,21 +24,21 @@ This is a **monorepo** with independent workspaces:
 
 **Purpose**: Monorepo initialization, tooling configuration, and basic project structure
 
-- [ ] T001 Create monorepo root structure with frontend/, backend/, shared/, .github/workflows/
-- [ ] T002 Initialize frontend workspace with Next.js 16 App Router via `pnpm create next-app@latest`
-- [ ] T003 Initialize backend workspace with FastAPI + UV package manager via `uv init`
-- [ ] T004 [P] Configure frontend linting (ESLint + Prettier) in frontend/.eslintrc.json
-- [ ] T005 [P] Configure backend linting (Ruff) in backend/pyproject.toml
-- [ ] T006 [P] Setup TypeScript strict mode in frontend/tsconfig.json
-- [ ] T007 [P] Setup Python mypy --strict in backend/pyproject.toml
-- [ ] T008 [P] Install frontend dependencies: Better Auth, shadcn/ui, Tailwind CSS, React Hook Form, react-hot-toast
-- [ ] T009 [P] Install backend dependencies: FastAPI, SQLModel, Pydantic, python-jose, bcrypt, Alembic, Uvicorn
-- [ ] T010 Create environment variable templates (.env.example) for both frontend and backend
-- [ ] T011 [P] Configure Tailwind CSS in frontend/tailwind.config.js with design tokens (colors for priority levels)
-- [ ] T012 [P] Initialize shadcn/ui components in frontend/src/components/ui/
-- [ ] T013 Create monorepo README.md with setup instructions and architecture overview
-- [ ] T014 [P] Setup GitHub Actions CI workflow for frontend (.github/workflows/frontend-ci.yml)
-- [ ] T015 [P] Setup GitHub Actions CI workflow for backend (.github/workflows/backend-ci.yml)
+- [X] T001 Create monorepo root structure with frontend/, backend/, shared/, .github/workflows/
+- [X] T002 Initialize frontend workspace with Next.js 16 App Router via `pnpm create next-app@latest`
+- [X] T003 Initialize backend workspace with FastAPI + UV package manager via `uv init`
+- [X] T004 [P] Configure frontend linting (ESLint + Prettier) in frontend/.eslintrc.json
+- [X] T005 [P] Configure backend linting (Ruff) in backend/pyproject.toml
+- [X] T006 [P] Setup TypeScript strict mode in frontend/tsconfig.json
+- [X] T007 [P] Setup Python mypy --strict in backend/pyproject.toml
+- [X] T008 [P] Install frontend dependencies: Better Auth, shadcn/ui, Tailwind CSS, React Hook Form, react-hot-toast
+- [X] T009 [P] Install backend dependencies: FastAPI, SQLModel, Pydantic, python-jose, bcrypt, Alembic, Uvicorn
+- [X] T010 Create environment variable templates (.env.example) for both frontend and backend
+- [X] T011 [P] Configure Tailwind CSS in frontend/tailwind.config.js with design tokens (colors for priority levels)
+- [X] T012 [P] Initialize shadcn/ui components in frontend/src/components/ui/
+- [X] T013 Create monorepo README.md with setup instructions and architecture overview
+- [X] T014 [P] Setup GitHub Actions CI workflow for frontend (.github/workflows/frontend-ci.yml)
+- [X] T015 [P] Setup GitHub Actions CI workflow for backend (.github/workflows/backend-ci.yml)
 
 **Checkpoint**: Project structure created, dependencies installed, CI configured
 
@@ -52,32 +52,32 @@ This is a **monorepo** with independent workspaces:
 
 ### Database & ORM Foundation
 
-- [ ] T016 Setup Alembic for database migrations in backend/alembic/
-- [ ] T017 Configure SQLModel engine and async session factory in backend/app/utils/database.py
-- [ ] T018 Create database connection string configuration with Neon PostgreSQL in backend/app/config.py
-- [ ] T019 Create initial Alembic migration (001_create_tables.py) with all 5 tables (users, tasks, categories, notifications, notification_preferences)
-- [ ] T020 Test database connection and migration with `alembic upgrade head`
+- [X] T016 Setup Alembic for database migrations in backend/alembic/
+- [X] T017 Configure SQLModel engine and async session factory in backend/app/utils/database.py
+- [X] T018 Create database connection string configuration with Neon PostgreSQL in backend/app/config.py
+- [X] T019 Create initial Alembic migration (001_create_tables.py) with all 5 tables (users, tasks, categories, notifications, notification_preferences)
+- [X] T020 Test database connection and migration with `alembic upgrade head`
 
 ### Authentication Foundation (Better Auth + FastAPI JWT)
 
-- [ ] T021 Configure Better Auth in frontend with JWT plugin in frontend/src/lib/auth-config.ts
-- [ ] T022 Implement JWT middleware for FastAPI in backend/app/middleware/auth.py (verifies tokens, extracts user_id)
-- [ ] T023 Create password hashing utilities (bcrypt cost 12) in backend/app/utils/security.py
-- [ ] T024 Implement JWT token generation and refresh in backend/app/utils/jwt.py
-- [ ] T025 Create Better Auth React context provider in frontend/src/lib/auth-context.tsx
+- [X] T021 Configure Better Auth in frontend with JWT plugin in frontend/src/lib/auth-config.ts
+- [X] T022 Implement JWT middleware for FastAPI in backend/app/middleware/auth.py (verifies tokens, extracts user_id)
+- [X] T023 Create password hashing utilities (bcrypt cost 12) in backend/app/utils/security.py
+- [X] T024 Implement JWT token generation and refresh in backend/app/utils/jwt.py
+- [X] T025 Create Better Auth React context provider in frontend/src/lib/auth-context.tsx
 
 ### API & Error Handling Infrastructure
 
-- [ ] T026 Setup FastAPI app with CORS middleware in backend/app/main.py
-- [ ] T027 Create global error handler for FastAPI in backend/app/middleware/error_handler.py
-- [ ] T028 Define standard API error response schemas in backend/app/schemas/error.py
-- [ ] T029 Create base API client with JWT header injection in frontend/src/lib/api/client.ts
-- [ ] T030 Setup API health check endpoint GET /api/health in backend/app/routes/health.py
+- [X] T026 Setup FastAPI app with CORS middleware in backend/app/main.py
+- [X] T027 Create global error handler for FastAPI in backend/app/middleware/error_handler.py
+- [X] T028 Define standard API error response schemas in backend/app/schemas/error.py
+- [X] T029 Create base API client with JWT header injection in frontend/src/lib/api/client.ts
+- [X] T030 Setup API health check endpoint GET /api/health in backend/app/routes/health.py
 
 ### Shared Type Definitions
 
-- [ ] T031 [P] Create shared API type definitions in shared/types/api.ts (TaskResponse, UserResponse, etc.)
-- [ ] T032 [P] Export shared types from shared/types/index.ts for frontend consumption
+- [X] T031 [P] Create shared API type definitions in shared/types/api.ts (TaskResponse, UserResponse, etc.)
+- [X] T032 [P] Export shared types from shared/types/index.ts for frontend consumption
 
 **Checkpoint**: Foundation ready - authentication works, database connected, API routes functional. User story implementation can now begin in parallel.
 
@@ -91,27 +91,27 @@ This is a **monorepo** with independent workspaces:
 
 ### Backend Implementation for User Story 1
 
-- [ ] T033 [P] [US1] Create User SQLModel in backend/app/models/user.py (id, email, name, password_hash, timestamps)
-- [ ] T034 [P] [US1] Create Pydantic schemas for auth in backend/app/schemas/auth.py (SignupRequest, LoginRequest, TokenResponse)
-- [ ] T035 [US1] Implement AuthService in backend/app/services/auth_service.py (signup, login, password verification)
-- [ ] T036 [US1] Implement POST /auth/signup endpoint in backend/app/routes/auth.py (create user, return JWT)
-- [ ] T037 [US1] Implement POST /auth/login endpoint in backend/app/routes/auth.py (verify credentials, return JWT)
-- [ ] T038 [US1] Implement POST /auth/logout endpoint in backend/app/routes/auth.py (token invalidation placeholder)
-- [ ] T039 [US1] Add email uniqueness validation and rate limiting (5 attempts/15min) to auth routes
-- [ ] T040 [US1] Add password strength validation (8+ chars, upper, lower, number, special) to signup
+- [X] T033 [P] [US1] Create User SQLModel in backend/app/models/user.py (id, email, name, password_hash, timestamps)
+- [X] T034 [P] [US1] Create Pydantic schemas for auth in backend/app/schemas/auth.py (SignupRequest, LoginRequest, TokenResponse)
+- [X] T035 [US1] Implement AuthService in backend/app/services/auth_service.py (signup, login, password verification)
+- [X] T036 [US1] Implement POST /auth/signup endpoint in backend/app/routes/auth.py (create user, return JWT)
+- [X] T037 [US1] Implement POST /auth/login endpoint in backend/app/routes/auth.py (verify credentials, return JWT)
+- [X] T038 [US1] Implement POST /auth/logout endpoint in backend/app/routes/auth.py (token invalidation placeholder)
+- [X] T039 [US1] Add email uniqueness validation and rate limiting (5 attempts/15min) to auth routes
+- [X] T040 [US1] Add password strength validation (8+ chars, upper, lower, number, special) to signup
 
 ### Frontend Implementation for User Story 1
 
-- [ ] T041 [P] [US1] Create Signup page UI in frontend/src/app/(public)/signup/page.tsx
-- [ ] T042 [P] [US1] Create Login page UI in frontend/src/app/(public)/login/page.tsx
-- [ ] T043 [P] [US1] Create SignupForm component with React Hook Form in frontend/src/components/features/auth/SignupForm.tsx
-- [ ] T044 [P] [US1] Create LoginForm component with React Hook Form in frontend/src/components/features/auth/LoginForm.tsx
-- [ ] T045 [US1] Implement auth API client methods in frontend/src/lib/api/auth.ts (signUp, signIn, signOut)
-- [ ] T046 [US1] Create ProtectedRoute wrapper component in frontend/src/components/features/auth/ProtectedRoute.tsx
-- [ ] T047 [US1] Implement auth state management hook useAuth in frontend/src/hooks/useAuth.ts
-- [ ] T048 [US1] Create root layout with auth provider in frontend/src/app/layout.tsx
-- [ ] T049 [US1] Add form validation, error display, and loading states to signup/login forms
-- [ ] T050 [US1] Implement redirect logic (authenticated → dashboard, unauthenticated → login)
+- [X] T041 [P] [US1] Create Signup page UI in frontend/src/app/(public)/signup/page.tsx
+- [X] T042 [P] [US1] Create Login page UI in frontend/src/app/(public)/login/page.tsx
+- [X] T043 [P] [US1] Create SignupForm component with React Hook Form in frontend/src/components/features/auth/SignupForm.tsx
+- [X] T044 [P] [US1] Create LoginForm component with React Hook Form in frontend/src/components/features/auth/LoginForm.tsx
+- [X] T045 [US1] Implement auth API client methods in frontend/src/lib/api/auth.ts (signUp, signIn, signOut)
+- [X] T046 [US1] Create ProtectedRoute wrapper component in frontend/src/components/features/auth/ProtectedRoute.tsx
+- [X] T047 [US1] Implement auth state management hook useAuth in frontend/src/hooks/useAuth.ts
+- [X] T048 [US1] Create root layout with auth provider in frontend/src/app/layout.tsx
+- [X] T049 [US1] Add form validation, error display, and loading states to signup/login forms
+- [X] T050 [US1] Implement redirect logic (authenticated → dashboard, unauthenticated → login)
 
 **Checkpoint**: Users can register, login, logout. JWT tokens issued and verified. Protected routes enforce authentication.
 
@@ -140,21 +140,21 @@ This is a **monorepo** with independent workspaces:
 
 ### Frontend Implementation for User Story 2
 
-- [ ] T063 [P] [US2] Create task API client methods in frontend/src/lib/api/tasks.ts (createTask, getTasks, getTaskById)
-- [ ] T064 [P] [US2] Create category API client methods in frontend/src/lib/api/categories.ts (createCategory, getCategories)
-- [ ] T065 [P] [US2] Create Task TypeScript interface in frontend/src/types/task.ts
-- [ ] T066 [P] [US2] Create Category TypeScript interface in frontend/src/types/category.ts
-- [ ] T067 [P] [US2] Create Dashboard page in frontend/src/app/(auth)/dashboard/page.tsx
-- [ ] T068 [P] [US2] Create TaskList component in frontend/src/components/features/tasks/TaskList.tsx
-- [ ] T069 [P] [US2] Create TaskItem card component in frontend/src/components/features/tasks/TaskItem.tsx (displays title, story, priority badge, category badge, schedule)
-- [ ] T070 [P] [US2] Create PriorityIndicator badge component in frontend/src/components/features/tasks/PriorityIndicator.tsx (color-coded: Low=blue, Med=yellow, High=orange, Urgent=red)
-- [ ] T071 [P] [US2] Create CategoryBadge component in frontend/src/components/features/tasks/CategoryBadge.tsx (name + color)
-- [ ] T072 [US2] Create CreateTaskModal component in frontend/src/components/features/tasks/CreateTaskModal.tsx (form with all fields)
-- [ ] T073 [US2] Create CategorySelector dropdown in frontend/src/components/features/categories/CategorySelector.tsx (with on-the-fly creation)
-- [ ] T074 [US2] Create ScheduleSelector component for day checkboxes in frontend/src/components/features/tasks/ScheduleSelector.tsx
-- [ ] T075 [US2] Implement useTasks hook for data fetching/mutations in frontend/src/hooks/useTasks.ts
-- [ ] T076 [US2] Implement useCategories hook in frontend/src/hooks/useCategories.ts
-- [ ] T077 [US2] Add loading states, error handling, and success toasts to task creation flow
+- [X] T063 [P] [US2] Create task API client methods in frontend/src/lib/api/tasks.ts (createTask, getTasks, getTaskById)
+- [X] T064 [P] [US2] Create category API client methods in frontend/src/lib/api/categories.ts (createCategory, getCategories)
+- [X] T065 [P] [US2] Create Task TypeScript interface in frontend/src/types/task.ts
+- [X] T066 [P] [US2] Create Category TypeScript interface in frontend/src/types/category.ts
+- [X] T067 [P] [US2] Create Dashboard page in frontend/src/app/(auth)/dashboard/page.tsx
+- [X] T068 [P] [US2] Create TaskList component in frontend/src/components/features/tasks/TaskList.tsx
+- [X] T069 [P] [US2] Create TaskItem card component in frontend/src/components/features/tasks/TaskItem.tsx (displays title, story, priority badge, category badge, schedule)
+- [X] T070 [P] [US2] Create PriorityIndicator badge component in frontend/src/components/features/tasks/PriorityIndicator.tsx (color-coded: Low=blue, Med=yellow, High=orange, Urgent=red)
+- [X] T071 [P] [US2] Create CategoryBadge component in frontend/src/components/features/tasks/CategoryBadge.tsx (name + color)
+- [X] T072 [US2] Create CreateTaskModal component in frontend/src/components/features/tasks/CreateTaskModal.tsx (form with all fields)
+- [X] T073 [US2] Create CategorySelector dropdown in frontend/src/components/features/categories/CategorySelector.tsx (with on-the-fly creation)
+- [X] T074 [US2] Create ScheduleSelector component for day checkboxes in frontend/src/components/features/tasks/ScheduleSelector.tsx
+- [X] T075 [US2] Implement useTasks hook for data fetching/mutations in frontend/src/hooks/useTasks.ts
+- [X] T076 [US2] Implement useCategories hook in frontend/src/hooks/useCategories.ts
+- [X] T077 [US2] Add loading states, error handling, and success toasts to task creation flow
 
 **Checkpoint**: Users can create rich tasks with all fields, view them in paginated list. Categories work with on-the-fly creation. Data isolation verified (users only see own tasks).
 
@@ -466,7 +466,7 @@ With 3 developers:
 - **Commit strategy**: Commit after each task or logical group (e.g., all models for a story)
 - **Stop at checkpoints**: Validate each story independently before proceeding
 - **ADR references**: See history/adr/ADR-003 through ADR-006 for architectural decisions
-- **Context7 MCP**: Use for Better Auth, Celery, Resend documentation during implementation
+- **Context7 MCP**: Must Use for Better Auth, Celery, Resend documentation during implementation
 
 ---
 

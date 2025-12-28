@@ -37,8 +37,8 @@ TaskFlow/
 
 ## Phases
 
-### Phase 1: Console Application (Current) 🚀
-**Status**: Foundation ✅ COMPLETE, Ready for User Stories
+### Phase 1: Console Application ✅ COMPLETE
+**Status**: Foundation Complete, All 6 User Stories Implemented
 
 - Interactive menu-driven CLI
 - In-memory storage
@@ -51,12 +51,57 @@ cd phase-1-console/
 uv sync
 uv run pytest
 uv run mypy --strict src/
+uv run python -m src.main
 ```
 
-### Phase 2: Web Application (Future)
-- Add persistent database (PostgreSQL)
-- REST API (FastAPI)
-- Web UI (Next.js)
+### Phase 2: Full-Stack Web Application (Current) 🚀
+**Status**: Phase 4 Frontend Complete, Backend Integration Next
+
+**Tech Stack**:
+- **Frontend**: Next.js 16 App Router + TypeScript + shadcn/ui + Tailwind CSS + Better Auth
+- **Backend**: FastAPI + SQLModel + PostgreSQL + JWT + Alembic
+- **Database**: Neon Serverless PostgreSQL
+- **Deployment**: Vercel (frontend) + Render/Railway (backend)
+
+**Completed**:
+- ✅ Phase 1: Setup (monorepo structure, dependencies, CI/CD)
+- ✅ Phase 2: Foundation (database, authentication, API infrastructure)
+- ✅ Phase 3: User Story 1 - Registration & Login (JWT auth)
+- ✅ Phase 4 Frontend: Rich Task Creation & Viewing UI
+
+**In Progress**:
+- ⏳ Phase 4 Backend: Task/Category API endpoints (T051-T062)
+
+**Setup (Development)**:
+
+```bash
+# Frontend (Next.js)
+cd frontend/
+pnpm install
+pnpm dev
+# Runs on http://localhost:3000
+
+# Backend (FastAPI)
+cd backend/
+uv sync
+uv run alembic upgrade head  # Run migrations
+uv run uvicorn app.main:app --reload
+# Runs on http://localhost:8000
+# API docs: http://localhost:8000/docs
+```
+
+**Environment Variables**:
+```bash
+# Frontend (.env.local)
+NEXT_PUBLIC_API_URL=http://localhost:8000
+BETTER_AUTH_SECRET=your-secret-key-here
+
+# Backend (.env)
+DATABASE_URL=postgresql://user:password@localhost:5432/taskflow
+JWT_SECRET_KEY=your-jwt-secret-here
+JWT_ALGORITHM=HS256
+JWT_ACCESS_TOKEN_EXPIRE_MINUTES=15
+```
 
 ### Phase 3: AI Features (Future)
 - AI-powered task analysis
@@ -102,35 +147,89 @@ All phases follow these principles:
 
 ## Getting Started
 
+### Phase 1 (Console App)
 ```bash
-# Enter Phase 1 directory
 cd phase-1-console/
-
-# Install dependencies
 uv sync
-
-# Run tests
 uv run pytest
-
-# Run type checking
 uv run mypy --strict src/
-
-# Run linting
-uv run ruff check src/
-
-# Run the application (when ready)
 uv run python -m src.main
 ```
 
+### Phase 2 (Web App) - Current Development
+
+**1. Start Backend (Terminal 1)**:
+```bash
+cd backend/
+
+# First time setup
+uv sync
+cp .env.example .env  # Edit with your database credentials
+
+# Run database migrations
+uv run alembic upgrade head
+
+# Start FastAPI server
+uv run uvicorn app.main:app --reload
+
+# Server runs on http://localhost:8000
+# API docs available at http://localhost:8000/docs
+```
+
+**2. Start Frontend (Terminal 2)**:
+```bash
+cd frontend/
+
+# First time setup
+pnpm install
+cp .env.example .env.local  # Edit with backend URL
+
+# Start Next.js dev server
+pnpm dev
+
+# App runs on http://localhost:3000
+```
+
+**3. Access the App**:
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000/api
+- API Documentation: http://localhost:8000/docs
+- Health Check: http://localhost:8000/api/health
+
+**4. Test the UI** (Phase 4 Frontend):
+- Navigate to http://localhost:3000/dashboard
+- Click "Create Task" button
+- Fill in:
+  - Title (required, 1-200 chars)
+  - Story (optional, max 2000 chars, markdown supported)
+  - Priority (Low/Medium/High/Urgent)
+  - Schedule (recurring habit: Mon/Wed/Fri) OR Due Date (one-time task)
+  - Category (select existing or create new with color)
+- Submit to see glassmorphism card with animations
+
 ## Quick Reference
 
+### Phase 1 (Console)
 | Command | Purpose |
 |---------|---------|
 | `uv run pytest` | Run all tests |
-| `uv run pytest -v` | Verbose test output |
 | `uv run mypy --strict src/` | Type check |
 | `uv run ruff check src/` | Lint code |
-| `uv run python -m src.main` | Run application |
+| `uv run python -m src.main` | Run console app |
+
+### Phase 2 (Web App)
+| Command | Purpose |
+|---------|---------|
+| **Backend** | |
+| `uv run uvicorn app.main:app --reload` | Start FastAPI server |
+| `uv run alembic upgrade head` | Run database migrations |
+| `uv run pytest` | Run backend tests |
+| `uv run mypy --strict app/` | Type check backend |
+| **Frontend** | |
+| `pnpm dev` | Start Next.js dev server |
+| `pnpm build` | Build for production |
+| `pnpm type-check` | Run TypeScript checks |
+| `pnpm lint` | Run ESLint |
 
 ## Contributing
 
@@ -146,6 +245,6 @@ MIT License
 
 ---
 
-**Last Updated**: 2025-12-27
-**Current Phase**: 1 (Console Application)
-**Status**: Foundation Complete, Ready for User Story Implementation
+**Last Updated**: 2025-12-28
+**Current Phase**: 2 (Full-Stack Web Application)
+**Status**: Phase 4 Frontend Complete (Rich Task UI with Glassmorphism), Backend Integration Next
