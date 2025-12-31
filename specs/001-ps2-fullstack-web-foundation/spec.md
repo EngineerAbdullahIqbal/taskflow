@@ -150,6 +150,24 @@ As a user managing tasks with schedules or due dates, I want to set reminders th
 
 ---
 
+### User Story 8 - High-Conversion Landing Page (Priority: P1)
+
+As a visitor to the Task-Flow website, I want to see a modern, attractive, and fast landing page that clearly explains the app's value so that I am motivated to sign up and start managing my tasks.
+
+**Why this priority**: The landing page is the first point of contact for new users. A professional and engaging entry point is critical for user acquisition and building trust in the product.
+
+**Independent Test**: Access the root URL (`/`), verify the hero section loads in < 2s, explore the bento grid feature showcase, and click the "Get Started" CTA to navigate to signup.
+
+**Acceptance Scenarios**:
+
+1. **Given** I am a visitor on the landing page, **When** the page loads, **Then** I see a high-conversion hero section with glassmorphism design and smooth motion animations (via `apply-motion-magic`)
+2. **Given** I scroll down the landing page, **When** I reach the feature section, **Then** I see a Bento grid layout (via `scaffold-landing-page`) showcasing core features with staggered entry animations
+3. **Given** I am on a mobile device, **When** I view the landing page, **Then** the layout adapts seamlessly (responsive design) and performance remains fast (< 2s load)
+4. **Given** I am interested in the app, **When** I click the "Get Started" button, **Then** I am navigated directly to the signup page
+5. **Given** I am using a screen reader, **When** I navigate the landing page, **Then** all sections and CTAs are properly labeled and accessible (WCAG 2.1 AA)
+
+---
+
 ### Edge Cases
 
 - What happens when a user tries to create a task with a title exceeding 200 characters? (System truncates or shows validation error)
@@ -261,6 +279,14 @@ As a user managing tasks with schedules or due dates, I want to set reminders th
 - **FR-081**: UI MUST show loading states during async operations (spinners, skeletons)
 - **FR-082**: UI MUST display user-friendly error messages for validation failures and server errors
 - **FR-083**: UI MUST meet WCAG 2.1 AA accessibility standards (keyboard navigation, screen reader support, color contrast ≥4.5:1)
+
+#### Landing Page & Brand Identity
+- **FR-089**: System MUST provide a high-conversion landing page at the root URL (/) featuring Task-Flow value proposition
+- **FR-090**: Landing page MUST utilize a Bento grid layout for showcasing features (tasks, habits, categories, reminders)
+- **FR-091**: Landing page MUST implement glassmorphism design aesthetic (backdrop-blur, translucent borders, subtle gradients)
+- **FR-092**: Landing page MUST feature staggered entry animations and scroll-triggered motion effects using Framer Motion
+- **FR-093**: System MUST implement SEO metadata (title, description, Open Graph tags) for the landing page to improve search visibility
+- **FR-094**: Landing page MUST include a clear "Get Started" call-to-action leading to user registration
 
 #### Performance & Reliability
 - **FR-084**: System MUST load initial page in under 2 seconds on standard broadband connection

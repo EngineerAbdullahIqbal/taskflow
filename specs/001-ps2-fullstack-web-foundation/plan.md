@@ -1,6 +1,6 @@
 # Implementation Plan: Phase 2 Full-Stack Web Application Foundation
 
-**Branch**: `001-ps2-fullstack-web-foundation` | **Date**: 2025-12-28 | **Spec**: [spec.md](./spec.md)
+**Branch**: `001-ps2-fullstack-web-foundation` | **Date**: 2025-12-29 | **Spec**: [spec.md](./spec.md)
 **Input**: Feature specification from `/specs/001-ps2-fullstack-web-foundation/spec.md`
 
 **Note**: This plan follows the Spec-Driven Development (SDD) workflow and TaskFlow Constitution v2.1.0.
@@ -314,12 +314,12 @@ backend/
 │   ├── jobs/
 │   │   ├── test_reminder_scheduler.py
 │   │   └── test_reminder_processor.py
-│   └── models/
-│       ├── test_user.py
-│       ├── test_task.py
-│       ├── test_category.py
-│       ├── test_notification.py
-│       └── test_notification_preference.py
+│   ├── models/
+│   │   ├── test_user.py
+│   │   ├── test_task.py
+│   │   ├── test_category.py
+│   │   ├── test_notification.py
+│   │   └── test_notification_preference.py
 ├── .env.example
 ├── CLAUDE.md
 ├── requirements.txt
@@ -631,6 +631,7 @@ paths:
                   format: email
                 password:
                   type: string
+                  format: password
                   minLength: 8
                 name:
                   type: string
@@ -663,6 +664,7 @@ paths:
                   format: email
                 password:
                   type: string
+                  format: password
       responses:
         '200':
           description: Authentication successful
@@ -1455,17 +1457,123 @@ Based on the plan, the following ADRs should be created:
 
 ---
 
+## Feature Implementation Plan: Task-Flow Landing Page
+
+**Specification**: `specs/001-ps2-fullstack-web-foundation/spec.md` (User Story 8, FR-089 to FR-094)
+
+**Objective**: Implement a modern, high-performance, and visually appealing landing page to serve as the primary entry point for Task-Flow, driving user engagement and sign-ups.
+
+### 1. Architecture Decisions (Landing Page Specific)
+
+1.  **Next.js App Router for Frontend**: The landing page will be a Server Component to optimize initial page load performance and SEO. Interactive elements and animations will be client components using `'use client'` where necessary.
+2.  **Modular Component Structure**: The landing page will be composed of distinct, reusable React components (e.g., `HeroSection`, `BentoGrid`, `FeatureCard`, `Navbar`, `Footer`) to promote maintainability and scalability.
+3.  **Utility-First Styling with Tailwind CSS**: Tailwind CSS will be used exclusively for styling, including responsive design and implementing glassmorphism effects (e.g., `backdrop-blur`, translucent backgrounds/borders).
+4.  **Framer Motion for Animations**: Integrate Framer Motion for declarative, performant animations. This includes entrance animations for the `HeroSection` and scroll-triggered (`whileInView`) staggered effects for the `BentoGrid` feature cards.
+5.  **Built-in SEO with Next.js Metadata API**: SEO will be handled by exporting a `metadata` object in the root `page.tsx` or `layout.tsx` to define title, description, and Open Graph tags.
+6.  **Accessibility by Design**: WCAG 2.1 AA compliance will be integrated from the outset, focusing on semantic HTML, proper ARIA attributes, sufficient color contrast, and keyboard navigability.
+
+### 2. File Structure and Component Hierarchy (Landing Page)
+
+The landing page will reside at the root route (`/`) within the `frontend/app` directory.
+
+```text
+frontend/
+├── app/
+│   ├── layout.tsx         # Root layout with global styles and SEO metadata
+│   ├── page.tsx           # Landing page entry point (Server Component)
+│   └── (landing)/         # Optional route group for landing page specific layouts/components
+│       ├── components/    # Components specific to the landing page
+│       │   ├── HeroSection.tsx
+│       │   ├── BentoGrid.tsx
+│       │   ├── FeatureCard.tsx
+│       │   ├── Navbar.tsx
+│       │   └── Footer.tsx
+│       └── layout.tsx     # Optional layout for landing page (if needed)
+├── components/            # Shared/reusable UI components (e.g., Button from shadcn/ui)
+├── lib/
+│   └── constants.ts       # Global constants (e.g., brand colors, site name)
+├── public/
+│   └── og-image.png       # Open Graph image for social sharing
+└── tailwind.config.ts
+```
+
+**Component Hierarchy:**
+
+-   `app/page.tsx`:
+    -   `<Navbar />`
+    -   `<HeroSection />`
+    -   `<BentoGrid />`
+        -   `<FeatureCard />` (multiple instances)
+    -   `<Footer />`
+
+### 3. Integration Points for Framer Motion
+
+-   **Hero Section**: Elements within the `HeroSection` will use `motion.div` with `initial`, `animate`, and `transition` props for entrance animations (e.g., fade-in, slide-up). `variants` will define animation states.
+-   **Bento Grid / Feature Cards**: The `BentoGrid` will orchestrate `FeatureCard` animations. `BentoGrid` will use `variants` with `staggerChildren` and `when: "beforeChildren"` for staggered entry. Each `FeatureCard` will use `motion.div` with `whileInView` to trigger animations as they enter the viewport.
+-   **Global Layout Transitions**: `AnimatePresence` can be considered for exit/entry animations if navigating away from the landing page, although this is a lower priority.
+
+### 4. Usage of Tailwind CSS
+
+-   **Glassmorphism**: Achieved using `backdrop-filter` utilities (e.g., `backdrop-blur-md`, `backdrop-blur-lg`) combined with translucent backgrounds (`bg-white/10`) and borders (`border-white/20`).
+-   **Responsive Design**: A mobile-first approach using Tailwind's breakpoint prefixes (`sm:`, `md:`, `lg:`). The `BentoGrid` will adapt from `grid-cols-1` to `md:grid-cols-2` or `lg:grid-cols-3`.
+-   **Brand Identity**: Custom colors defined in `tailwind.config.ts` will align with Task-Flow's brand palette for consistent UI elements.
+
+### 5. Skill Mentions
+
+-   **`scaffold-landing-page`**: This skill will be used for initial generation of the landing page's structure and core components, providing a solid, pre-configured starting point.
+-   **`apply-motion-magic`**: This skill will be utilized to inject and refine Framer Motion animations across the landing page, ensuring smooth and engaging visual effects.
+
+### 6. Steps for SEO Implementation
+
+1.  **Root Layout Metadata**: Define the `metadata` object in `frontend/app/layout.tsx` to include `title`, `description`, `keywords`, `openGraph` tags (with `/public/og-image.png`), and `twitter` card tags.
+2.  **Canonical URLs**: Ensure proper canonicalization for the root URL.
+3.  **`robots.txt`**: Configure `robots.txt` to allow crawling of the landing page.
+
+### 7. Performance Optimization Considerations
+
+-   **Image Optimization**: Utilize `next/image` for all images with appropriate `priority` and `sizes` props.
+-   **Font Optimization**: Use `next/font` for local fonts to minimize layout shifts.
+-   **Client Component Boundaries**: Judiciously use `'use client'` to maximize Server Component rendering.
+-   **Asset Preloading**: Preload critical assets using Next.js's `<Head>` or `<Link rel="preload">` for improved FCP/LCP.
+-   **Framer Motion Optimization**: Use hardware-accelerated properties and minimize re-renders.
+
+### 8. Accessibility (WCAG 2.1 AA) Integration
+
+-   **Semantic HTML**: Use appropriate HTML5 tags for clear document structure.
+-   **Color Contrast**: Ensure all text and interactive elements have a contrast ratio of at least 4.5:1.
+-   **Keyboard Navigation**: All interactive elements must be navigable and operable via keyboard.
+-   **Focus Indicators**: Provide clear visual focus indicators (e.g., `ring-2 ring-primary`).
+-   **ARIA Attributes**: Use `aria-label`, `aria-describedby` for screen reader users.
+-   **Responsive Touch Targets**: Ensure interactive elements have a minimum size of 44x44px.
+
+## Architecture Decision Records (ADRs) - Landing Page Specific
+
+-   📋 Architectural decision detected: Landing Page Animation Framework. Document reasoning and tradeoffs between Framer Motion and other animation libraries? Run `/sp.adr Landing Page Animation Framework`
+-   📋 Architectural decision detected: Glassmorphism Implementation Strategy. Document reasoning and tradeoffs of using Tailwind CSS `backdrop-filter` vs. custom CSS solutions? Run `/sp.adr Glassmorphism Styling Strategy`
+
+## Testing Strategy (Landing Page)
+
+1.  **Unit Tests**: React Testing Library tests for `HeroSection`, `BentoGrid`, and `FeatureCard` components.
+2.  **E2E Tests (Playwright)**: Verify "Get Started" button navigates to `/auth/signup`. Test responsive behavior and key interactive elements.
+3.  **Lighthouse Audit**: Regular Lighthouse audits for performance, accessibility, and SEO.
+4.  **Manual Accessibility Testing**: Keyboard navigation and screen reader tests.
+
+## Deployment Checklist (Landing Page)
+
+-   [ ] `next build` generates the landing page correctly.
+-   [ ] Vercel deployment correctly serves the landing page at `/`.
+-   [ ] Environment variables configured for any dynamic content.
+-   [ ] Initial load times and Lighthouse scores monitored post-deployment.
+
 ## Next Steps
 
-1. **Create ADRs**: Document the 4 architectural decisions above in `history/adr/`
-2. **Execute Phase 0**: Use Context7 MCP to fetch library documentation and generate `research.md`
-3. **Execute Phase 1**: Generate `data-model.md`, `contracts/`, `quickstart.md`
-4. **Run agent context update**: `.specify/scripts/bash/update-agent-context.sh claude`
-5. **Re-validate Constitution Check**: Ensure all Phase 1 design decisions pass gates
-6. **Run `/sp.tasks`**: Generate actionable task breakdown from this plan
+1.  **Review and Approve**: User reviews the updated specification and implementation plan.
+2.  **Create ADRs**: Run `/sp.adr` for the suggested architectural decisions.
+3.  **Phase 0 Research**: Execute research tasks as outlined in the Research & Best Practices section.
+4.  **Generate Tasks**: Run `/sp.tasks` to generate actionable implementation tasks in `tasks.md`.
+5.  **Implementation**: Begin development following the TDD workflow, starting with the foundation layers.
 
----
-
-**Plan Created**: 2025-12-28
-**Next Command**: `/sp.tasks` (after Phase 0 and Phase 1 artifacts generated)
-**Constitution Compliance**: ✅ All gates aligned with TaskFlow Constitution v2.1.0
+**Constitution Compliance**:
+- ✅ Specification Gate: Complete (with Landing Page update)
+- ⏳ Design Gate: Pending Phase 1
+- ⏳ Architecture Gate: Pending Phase 1

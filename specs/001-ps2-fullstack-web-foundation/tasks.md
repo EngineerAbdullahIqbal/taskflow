@@ -302,6 +302,75 @@ This is a **monorepo** with independent workspaces:
 
 ---
 
+## Phase 11: User Story 8 - High-Conversion Landing Page (Priority: P1)
+
+**Story Goal**: Implement a modern, high-performance landing page with glassmorphism design and Framer Motion animations to serve as the primary entry point for Task-Flow, driving user engagement and sign-ups.
+
+**Independent Test**: Navigate to root URL (`/`), verify hero section loads in < 2s with glassmorphism effects, scroll to view Bento grid feature showcase with staggered animations, click "Get Started" CTA to navigate to `/signup`, test responsive behavior on mobile (375px) and desktop (1024px+), verify WCAG 2.1 AA accessibility with keyboard navigation and screen reader.
+
+**ADR Reference**: See `history/adr/0001-glassmorphism-styling-strategy-with-tailwind-backdrop-filters.md` for styling implementation approach.
+
+### Dependencies & Setup
+
+- [ ] T171 [P] [US8] Install Framer Motion in frontend workspace via `pnpm add framer-motion`
+- [ ] T172 [P] [US8] Configure Tailwind CSS for glassmorphism utilities in frontend/tailwind.config.ts (extend backdrop-blur values if needed)
+- [ ] T173 [P] [US8] Create brand constants file in frontend/src/lib/constants.ts (site name, colors, feature list)
+- [ ] T174 [P] [US8] Add Open Graph image asset to frontend/public/og-image.png (1200x630px for social sharing)
+
+### Root Layout & SEO Configuration
+
+- [ ] T175 [US8] Update root layout metadata in frontend/src/app/layout.tsx with title, description, openGraph, twitter tags
+- [ ] T176 [P] [US8] Configure robots.txt in frontend/public/robots.txt to allow crawling
+- [ ] T177 [P] [US8] Add canonical URL configuration to layout for SEO
+
+### Landing Page Components (Glassmorphism + Framer Motion)
+
+- [ ] T178 [P] [US8] Create HeroSection component in frontend/src/app/(landing)/components/HeroSection.tsx with glassmorphism effects (backdrop-blur-lg, bg-white/10) and Framer Motion entrance animations (fade-in, slide-up)
+- [ ] T179 [P] [US8] Create BentoGrid container component in frontend/src/app/(landing)/components/BentoGrid.tsx with staggerChildren animation variants
+- [ ] T180 [P] [US8] Create FeatureCard component in frontend/src/app/(landing)/components/FeatureCard.tsx with whileInView scroll-triggered animations and glassmorphism styling
+- [ ] T181 [P] [US8] Create Navbar component in frontend/src/app/(landing)/components/Navbar.tsx with translucent background (backdrop-blur-md, bg-white/20)
+- [ ] T182 [P] [US8] Create Footer component in frontend/src/app/(landing)/components/Footer.tsx with links to privacy/terms and social media
+
+### Root Page Assembly
+
+- [ ] T183 [US8] Implement root page in frontend/src/app/page.tsx (Server Component) composing Navbar, HeroSection, BentoGrid (with 4-6 FeatureCards), Footer
+- [ ] T184 [US8] Add "Get Started" CTA button in HeroSection linking to `/signup` route
+- [ ] T185 [US8] Populate BentoGrid with feature cards showcasing: task creation, priority management, categories, reminders (content from constants.ts)
+
+### Responsive & Performance Optimization
+
+- [ ] T186 [P] [US8] Implement mobile-first responsive design using Tailwind breakpoints (sm:, md:, lg:) - BentoGrid adapts from grid-cols-1 to md:grid-cols-2 to lg:grid-cols-3
+- [ ] T187 [P] [US8] Add conditional glassmorphism reduction on mobile screens (< 768px) for performance using responsive variants
+- [ ] T188 [P] [US8] Optimize images with next/image component (priority prop for hero image, sizes prop for responsive images)
+- [ ] T189 [P] [US8] Implement font optimization with next/font for local font loading to minimize layout shift
+
+### Accessibility (WCAG 2.1 AA)
+
+- [ ] T190 [P] [US8] Add semantic HTML5 tags (header, main, section, footer) for document structure
+- [ ] T191 [P] [US8] Ensure color contrast ≥4.5:1 for all text on glassmorphism backgrounds (test with WebAIM contrast checker)
+- [ ] T192 [P] [US8] Add keyboard navigation support (Tab, Enter) for all interactive elements (CTAs, navbar links)
+- [ ] T193 [P] [US8] Add ARIA attributes (aria-label, aria-describedby) to sections and interactive elements for screen readers
+- [ ] T194 [P] [US8] Verify touch targets ≥44x44px for mobile accessibility on CTA buttons and links
+
+### Testing & Validation
+
+- [ ] T195 [P] [US8] Write React Testing Library unit test for HeroSection component in frontend/tests/components/HeroSection.test.tsx
+- [ ] T196 [P] [US8] Write React Testing Library unit test for BentoGrid and FeatureCard components in frontend/tests/components/BentoGrid.test.tsx
+- [ ] T197 [P] [US8] Write Playwright E2E test verifying "Get Started" button navigates to /signup in frontend/tests/e2e/landing-page.spec.ts
+- [ ] T198 [P] [US8] Write Playwright E2E test for responsive behavior (375px, 768px, 1024px viewports)
+- [ ] T199 [US8] Run Lighthouse audit on landing page - verify Performance ≥90, Accessibility ≥90, SEO ≥90, load time < 2s
+- [ ] T200 [P] [US8] Perform manual keyboard navigation test (Tab through all interactive elements, Enter to activate CTAs)
+- [ ] T201 [P] [US8] Perform manual screen reader test (NVDA or VoiceOver) to verify all sections and CTAs are properly announced
+
+### Integration with Existing Auth Routes
+
+- [ ] T202 [US8] Verify root page (`/`) is publicly accessible (no auth guard) and navigation to `/signup` and `/login` works correctly
+- [ ] T203 [US8] Test full user flow: Landing page → Click "Get Started" → Signup → Login → Dashboard
+
+**Checkpoint**: Landing page live at root URL with glassmorphism design, Framer Motion animations, < 2s load time, responsive across mobile/tablet/desktop, WCAG 2.1 AA accessible, "Get Started" CTA navigates to signup.
+
+---
+
 ## Phase 10: Polish & Cross-Cutting Concerns
 
 **Purpose**: Improvements that affect multiple user stories, quality gates, deployment
@@ -427,18 +496,21 @@ T071: "Create CategoryBadge component"
 
 ## Implementation Strategy
 
-### MVP First (User Stories 1 + 2 Only)
+### MVP First (User Stories 1 + 2 + 8)
 
 1. Complete Phase 1: Setup → **Project structure ready**
 2. Complete Phase 2: Foundational → **Auth + DB + API foundation ready**
-3. Complete Phase 3: User Story 1 (Auth) → **Users can register/login**
-4. Complete Phase 4: User Story 2 (Create/View Tasks) → **Users can create rich tasks**
-5. **STOP and VALIDATE**: Test US1 + US2 independently
-6. Deploy/demo MVP with auth + task creation
+3. Complete Phase 11: User Story 8 (Landing Page) → **Professional entry point live**
+4. Complete Phase 3: User Story 1 (Auth) → **Users can register/login from landing page**
+5. Complete Phase 4: User Story 2 (Create/View Tasks) → **Users can create rich tasks**
+6. **STOP and VALIDATE**: Test US8 → US1 → US2 flow independently
+7. Deploy/demo MVP with landing page + auth + task creation
+
+**Note**: Landing page (US8) is developed first to establish brand identity and provide entry point before implementing auth flows.
 
 ### Incremental Delivery
 
-1. **MVP**: US1 (Auth) + US2 (Create/View) → Deploy → Get feedback
+1. **MVP**: US8 (Landing Page) + US1 (Auth) + US2 (Create/View) → Deploy → Get feedback
 2. **V1.1**: Add US7 (Reminders) → Deploy → Get feedback on notifications
 3. **V1.2**: Add US3 (Complete/Delete) → Deploy → Core task management complete
 4. **V1.3**: Add US4 (Edit) → Deploy → Full CRUD functional
@@ -465,12 +537,12 @@ With 3 developers:
 - **Each user story**: Should be independently completable and testable
 - **Commit strategy**: Commit after each task or logical group (e.g., all models for a story)
 - **Stop at checkpoints**: Validate each story independently before proceeding
-- **ADR references**: See history/adr/ADR-003 through ADR-006 for architectural decisions
+- **ADR references**: See history/adr/ for architectural decisions (ADR-001: Glassmorphism Styling, ADR-003 through ADR-006: Auth, Monorepo, Task Features, Notification Delivery)
 - **Context7 MCP**: Must Use for Better Auth, Celery, Resend documentation during implementation
 
 ---
 
-**Total Tasks**: 170 atomic, executable tasks
-**User Stories**: 7 (US1-US7)
-**MVP Scope**: US1 (Auth) + US2 (Create/View Tasks) = ~77 tasks
-**Estimated Effort**: MVP 2-3 weeks, Full feature set 4-6 weeks (single developer)
+**Total Tasks**: 203 atomic, executable tasks
+**User Stories**: 8 (US1-US8)
+**MVP Scope**: US1 (Auth) + US2 (Create/View Tasks) + US8 (Landing Page) = ~110 tasks
+**Estimated Effort**: MVP 2.5-3.5 weeks, Full feature set 5-7 weeks (single developer)
